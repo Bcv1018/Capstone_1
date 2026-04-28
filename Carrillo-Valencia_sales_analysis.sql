@@ -50,3 +50,33 @@ OR Store_Id BETWEEN 852 AND 853
 OR Store_Id BETWEEN 901 AND 911
 GROUP BY Territory, `Year`
 ORDER BY Year, Territory;
+
+/*What is the number of transactions per month and average transaction size by product category
+for the sales territory?*/
+SELECT
+	 DATE_FORMAT(Transaction_Date, '%Y-%m') AS `Date`
+    ,COUNT(Transaction_Date) AS Num_of_Transactions
+    ,FORMAT(AVG(Sale_Amount),2) AS AVG_Transaction_Size
+    ,i.Category
+FROM store_sales AS s
+JOIN products AS p ON s.Prod_Num = p.ProdNum
+JOIN inventory_categories AS i ON p.Categoryid = i.Categoryid
+WHERE s.Store_ID BETWEEN 901 AND 911
+GROUP BY i.Category, `Date`
+ORDER BY i.Category, `Date`;
+
+/*Can you provide a ranking of in-store sales performance by each store in the sales territory*/
+-- Tables store_sales and store_locations
+SELECT 
+	RANK() OVER (ORDER BY SUM(Sale_Amount) DESC) AS `Rank`
+    ,s.Store_ID
+    ,l.StoreLocation
+    ,FORMAT(SUM(Sale_Amount),2) AS Performance
+FROM store_sales AS s
+JOIN store_locations AS l ON s.Store_ID = l.StoreID
+WHERE Store_ID BETWEEN 901 AND 911
+GROUP BY l.StoreLocation, s.Store_ID
+ORDER BY `Rank`;
+
+/*What is your recommendation for where to focus sales attention in the next quarter?*/
+ /* My recommendation based on rankings and performance 
