@@ -79,4 +79,5 @@ GROUP BY l.StoreLocation, s.Store_ID
 ORDER BY `Rank`;
 
 /*What is your recommendation for where to focus sales attention in the next quarter?*/
- /* My recommendation based on rankings and performance 
+ /* My recommendation based on rankings and performance is that for the next quarter we should focus on the Dallas location as it is the lowest performaing location in the Texas teritorry.
+ With Dallas being the 9th most populous city in the US severly underperforming compared to the rest of the location is a problem and needs to be our highest priority.
